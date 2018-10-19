@@ -1,0 +1,2 @@
+class Tmi < ApplicationMailer
+end

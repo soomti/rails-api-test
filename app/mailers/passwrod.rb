@@ -1,0 +1,2 @@
+class Passwrod < ApplicationMailer
+end
