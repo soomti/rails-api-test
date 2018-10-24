@@ -1,6 +1,30 @@
 # frozen_string_literal: true
 
 class User::SessionsController < Devise::SessionsController
+  def create
+    respond_to do |format|  
+      format.html { super }  
+      format.json {  
+        warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")  
+        render :json => {:success => true}  
+      }
+    end  
+  end
+
+  def destroy
+    respond_to do |format|
+      format.html {super}
+      format.json {  
+        Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+        render :json => {}
+      }
+    end
+  end
+
+  def failure
+    render :json => {:success => false, :errors => ["Login Failed"]}
+  end
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
