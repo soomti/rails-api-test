@@ -4,7 +4,7 @@ class CreatePosts < ActiveRecord::Migration
       t.string :title
       t.text :content
       t.string :tag
-
+      t.references :user, polymorphic: { default: 'Usser' }
       t.timestamps null: false
     end
   end
